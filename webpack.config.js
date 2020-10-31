@@ -64,4 +64,5 @@ module.exports = {
       template: './client/index.html',
     }),
   ],
+  resolve: ['.jsx'],
 };

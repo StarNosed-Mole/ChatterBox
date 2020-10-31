@@ -1,3 +1,4 @@
+/* eslint-disable react/button-has-type */
 import React, { useState } from 'react';
 import { render } from 'react-dom';
 import './styles/index.css';
@@ -5,6 +6,7 @@ import './styles/index.css';
 const App = () => {
   const connection = new WebSocket('ws://localhost:4040');
   const [data, setData] = useState('');
+  const [formText, setFormText] = useState('');
   connection.onopen = (event) => {
     console.log('WebSocket is open now.');
   };
@@ -23,13 +25,26 @@ const App = () => {
       return newData;
     });
   };
+
+  const handleClick = () => {
+    console.log('hello');
+    connection.send(formText);
+  };
   return (
     <>
       <p id="chat">Data: { data }</p>
-      <form>
-        <input type="text" />
-        <button type="submit" onClick={connection.send()}>Submit</button>
-      </form>
+      <input
+        type="text"
+        onChange={(e) => {
+          setFormText(e.target.value);
+          console.log(formText);
+        }}
+      />
+      <button
+        onClick={handleClick}
+      >
+        Submit
+      </button>
     </>
   );
 };

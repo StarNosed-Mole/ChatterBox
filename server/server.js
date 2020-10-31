@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const { Connection } = require('pg');
 const WebSocket = require('ws');
 
 const app = express();
@@ -34,7 +35,6 @@ wss.on('connection', (ws) => {
     broadcast(message);
   });
 });
-
 
 /* STATIC FILES */
 

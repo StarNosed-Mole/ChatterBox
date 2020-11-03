@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 
 class Login extends React.Component {
   constructor() {
@@ -7,8 +7,10 @@ class Login extends React.Component {
     this.state = {
       username: '',
       password: '',
+      errorMessage: '',
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleChange(event, key) {
@@ -22,20 +24,60 @@ class Login extends React.Component {
     }));
   }
 
+  handleClick() {
+    const { username, password } = this.state;
+    const { push } = useHistory();
+    // fetch user info by sending username and password
+    fetch('/api/login', {
+      method: 'GET',
+      'Content-Type': 'multipart/form-data',
+      data: {
+        username, 
+        password,
+      },
+    }).then((data) => {
+      const { isLoggedIn } = data;
+      // if user is logged in
+      // redirect to main page
+      if (isLoggedIn) return push('/main');
+      // else
+      // set error message to 'Wrong username or password!'
+      this.setState((prevState) => {
+        return {
+          ...prevState,
+          errorMessage: 'Wrong username or password!',
+        }
+      });
+      // redirect to login page
+      return push('/login');
+    }).catch((err) => console.log(err));
+  }
+
   render() {
     return (
-      <form>
-        <input
-          type="text"
-          placeholder="username"
-          onChange={(event) => this.handleChange(event, 'username')}
-        />
-        <input
-          type="password"
-          placeholder="password"
-          onChange={(event) => this.handleChange(event, 'password')}
-        />
-      </form>
+      <>
+        <p>{this.state.errorMessage}</p>
+        <h3>Login</h3>
+        <form style={{display: 'flex', flexDirection: 'column'}}>
+          <input
+            type="text"
+            placeholder="username"
+            onChange={(event) => this.handleChange(event, 'username')}
+            />
+          <input
+            type="password"
+            placeholder="password"
+            onChange={(event) => this.handleChange(event, 'password')}
+          />
+          <button
+            type="button"
+            onClick={this.handleClick}
+          >
+            Log In
+          </button>
+        </form>
+        <p>Don't have an account? <Link to='/signup'>Sign Up</Link></p>
+      </>
     );
   }
 }

@@ -15,26 +15,6 @@ module.exports = {
       '/api': 'localhost:3000',
     },
   },
-  // entry: './client/index.jsx',
-  // output: {
-  //   path: path.resolve(__dirname, 'build'),
-  //   filename: 'bundle.js',
-  // },
-  // mode: process.env.NODE_ENV,
-  // devServer: {
-  //   host: 'localhost',
-  //   port: 8080,
-  //   // // Match the output path
-  //   // contentBase: path.resolve(__dirname, 'build'),
-  //   // Match the output 'publicPath'
-  //   publicPath: '/',
-  //   // // fallback to the root for other urls
-  //   // historyApiFallback: true,
-  //   proxy: {
-  //     '/api': 'http://localhost:3000',
-  //     secure: false,
-  //   },
-  // },
   module: {
     rules: [
       {
@@ -64,5 +44,4 @@ module.exports = {
       template: './client/index.html',
     }),
   ],
-  resolve: ['.jsx'],
 };

@@ -1,0 +1,18 @@
+body, .root {
+  height: 100vh;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
+
+.chatroom {
+  border: .1em solid black;
+  width: 100%;
+  min-width: 15em;
+  height: 30em;
+}
+
+form {
+  display: flex;
+  justify-content: center;
+}
